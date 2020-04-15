@@ -52,23 +52,25 @@ node {
     }
 
   }
-
+/*
   if(env.BRANCH_NAME == 'develop'){
     stage('Snapshot Build And Upload Artifacts') {
-  /*    if (isUnix()) {
+  if (isUnix()) {
          sh "'${mvnHome}/bin/mvn' clean deploy"
       } else {
          bat(/"${mvnHome}\bin\mvn" clean deploy/)
-      }*/
-    }
+      }
+    }*/
 
     stage('Deploy') {
        //sh 'curl -u jenkins:jenkins -T target/**.war "http://localhost:9090/manager/text/deploy?path=/devops&update=true"'
+	    echo 'Started Deploy'
 	   bat  'curl -u admin:admin -F filedata=target/**.war "http://localhost:9090/manager/text/deploy?path=/devops&update=true"'
     }
 
     stage("Smoke Test"){
-       sh "curl --retry-delay 10 --retry 5 http://localhost:9090/devops"
+     //  sh "curl --retry-delay 10 --retry 5 http://localhost:9090/devops"
+	 bat   "curl --retry-delay 10 --retry 5 http://localhost:9090/devops"
     }
 
   }
