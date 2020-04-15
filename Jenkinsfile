@@ -6,7 +6,7 @@ node {
   def retrieveArtifact
 
   stage('Prepare') {
-    mvnHome = tool 'maven'
+    mvnHome = tool 'MavenDefault'
   }
 
   stage('Checkout') {
