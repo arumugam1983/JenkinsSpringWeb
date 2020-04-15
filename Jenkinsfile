@@ -59,8 +59,8 @@ node {
          sh "'${mvnHome}/bin/mvn' clean deploy"
       } else {
          bat(/"${mvnHome}\bin\mvn" clean deploy/)
-      }
-    }*/
+      }*/
+    }
 
     stage('Deploy') {
        //sh 'curl -u jenkins:jenkins -T target/**.war "http://localhost:9090/manager/text/deploy?path=/devops&update=true"'
