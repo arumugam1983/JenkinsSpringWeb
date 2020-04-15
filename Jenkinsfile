@@ -6,9 +6,7 @@ node {
   def retrieveArtifact
 
   stage('Prepare') {
-    echo 'Start Prepare'
-    mvnHome = tool 'MavenDefault'
-    echo 'End Prepare'
+    mvnHome = tool 'maven'
   }
 
   stage('Checkout') {
@@ -55,12 +53,18 @@ node {
 
   }
 
-
+  if(env.BRANCH_NAME == 'develop'){
+    stage('Snapshot Build And Upload Artifacts') {
+  /*    if (isUnix()) {
+         sh "'${mvnHome}/bin/mvn' clean deploy"
+      } else {
+         bat(/"${mvnHome}\bin\mvn" clean deploy/)
+      }
+    }*/
 
     stage('Deploy') {
-	    echo 'Started deploy'
-     //  sh 'curl -u jenkins:jenkins -T target/**.war "http://localhost:9090/manager/text/deploy?path=/devops&update=true"'
-	bat 'curl -u admin:admin -F filedata=target/**.war "http://localhost:9090/manager/text/deploy?path=/devops&update=true"'
+       //sh 'curl -u jenkins:jenkins -T target/**.war "http://localhost:9090/manager/text/deploy?path=/devops&update=true"'
+	   bat  'curl -u admin:admin -F filedata=target/**.war "http://localhost:9090/manager/text/deploy?path=/devops&update=true"'
     }
 
     stage("Smoke Test"){
